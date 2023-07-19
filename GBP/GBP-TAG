@@ -1,0 +1,29 @@
+set firewall family any filter GBP-TAG micro-segmentation
+
+{% for if_name,if_param in interface.items() %}
+    {% for tags in if_param['tags'] %}
+        {% if tags == "gbp_10" %}
+            {% if if_param['part_of'] %}
+set firewall family any filter GBP-TAG term TAG10-{{if_param['part_of']}} from interface {{if_param['part_of']}}.0
+set firewall family any filter GBP-TAG term TAG10-{{if_param['part_of']}} then gbp-tag 10
+            {% else %} 
+set firewall family any filter GBP-TAG term TAG10-{{if_param['intfName']}} from interface {{if_param['intfName']}}.0
+set firewall family any filter GBP-TAG term TAG10-{{if_param['intfName']}} then gbp-tag 10
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% for if_name,if_param in interface.items() %}
+    {% for tags in if_param['tags'] %}
+        {% if tags == "gbp_20" %}
+            {% if if_param['part_of'] %}
+set firewall family any filter GBP-TAG term TAG20-{{if_param['part_of']}} from interface {{if_param['part_of']}}.0
+set firewall family any filter GBP-TAG term TAG20-{{if_param['part_of']}} then gbp-tag 20
+            {% else %} 
+set firewall family any filter GBP-TAG term TAG20-{{if_param['intfName']}} from interface {{if_param['intfName']}}.0
+set firewall family any filter GBP-TAG term TAG20-{{if_param['intfName']}} then gbp-tag 20
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
