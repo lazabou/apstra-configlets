@@ -1,0 +1,3 @@
+vlan_rewrite:
+  VLAN_100_2: 100
+  VLAN_200_2: 200
