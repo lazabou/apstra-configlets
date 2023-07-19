@@ -1,0 +1,30 @@
+firewall {
+     family any {
+        filter MSEG {
+{% for dst,action in from_gbp_10.items() %}
+             term From10-To{{dst}} {
+                from {
+                    gbp-src-tag 10;
+                    gbp-dst-tag {{dst}};
+                }
+                then {
+                    count GBP10-{{dst}};
+                    {{action}};
+                    }
+                }
+{% endfor %}
+{% for dst,action in from_gbp_20.items() %}
+             term From20-To{{dst}} {
+                from {
+                    gbp-src-tag 20;
+                    gbp-dst-tag {{dst}};
+                }
+                then {
+                    count GBP20-{{dst}};
+                    {{action}};
+                    }
+                }
+{% endfor %}
+        }
+    }
+}
