@@ -1,0 +1,6 @@
+from_gbp_10:
+  '10': accept
+  '20': discard
+from_gbp_20:
+  '10': discard
+  '20': discard
