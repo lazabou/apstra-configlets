@@ -1,0 +1,20 @@
+{% for intf in interface.values() %}
+    {% for vlan_id, vlan_data in vlan.items() %}
+        {% if vlan_data['name'] in vlan_rewrite and vlan_id in intf.allowed_vlans %}
+            {% if not intf.part_of %}
+interfaces {
+    {{intf.intfName}} {
+        unit 0 {
+            family ethernet-switching {
+                vlan-rewrite {
+                    translate {{ vlan_rewrite[vlan_data['name']]}} {{ vlan_id }}
+                }
+            }
+        }
+    }
+}  
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+{% endfor %}
